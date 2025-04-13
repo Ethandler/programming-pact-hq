@@ -48,6 +48,17 @@ Individual workstations for experimenting, building, and testing.
 
 ---
 
+## 🛠️ Contributing
+
+This project uses a multi-branch workflow. Each member has their own dev branch to work freely:
+- `dev-ethan` – automation, backend, and tools
+- `dev-chandler` – CLI tools, scripts, and backend
+- `dev-jimmy` – game experiments and learning projects
+
+Before contributing, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+
+---
+
 ## Resources & Learning Tracks
 
 - [Python Course (YouTube)](https://www.youtube.com/watch?v=rfscVS0vtbw)
