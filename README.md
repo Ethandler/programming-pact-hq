@@ -51,6 +51,7 @@ Individual workstations for experimenting, building, and testing.
 ## 🛠️ Contributing
 
 This project uses a multi-branch workflow. Each member has their own dev branch to work freely:
+
 - `dev-ethan` – automation, backend, and tools
 - `dev-chandler` – CLI tools, scripts, and backend
 - `dev-jimmy` – game experiments and learning projects
