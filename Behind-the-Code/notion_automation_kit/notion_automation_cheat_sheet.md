@@ -164,9 +164,12 @@ Based strictly on what’s visible:
 ## 🧠 Pro Tip
 
 If you want to build **advanced workflows**, consider pairing this with:
+
 - **Make.com or Zapier** (for external logic and API calls)
 - **Notion SDK or custom bots** if you're dev-savvy
 
 ---
 
-_Last updated: Based on screenshots captured April 17, 2025_
+### Last Updated
+
+### Based on screenshots captured April 17, 2025
