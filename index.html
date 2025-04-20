@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programming Pact HQ Onboarding</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Global dark + green theme */
+    body { background: #0d0f12; color: #a0ffa0; font-family: 'Segoe UI', sans-serif; margin: 0; }
+    header { background: #13181c; padding: 1rem; text-align: center; }
+    header h1 { margin: 0; color: #70ff70; }
+    nav { display: flex; background: #1a1f24; }
+    nav button {
+      flex: 1; padding: 0.75rem; background: #1a1f24; border: none; color: #a0ffa0; cursor: pointer;
+      transition: background 0.3s;
+    }
+    nav button:hover, nav button.active { background: #283031; }
+    section { display: none; padding: 1.5rem; }
+    section.active { display: block; }
+    a { color: #70ff70; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .download-btn { display: inline-block; margin: 0.5rem 0; padding: 0.5rem 1rem; background: #20282d; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🚀 Programming Pact HQ Onboarding</h1>
+    <p>Code is our weapon. Freedom is our mission. Brotherhood is the protocol.</p>
+  </header>
+  <nav>
+    <button class="active" data-tab="intro">Start Here</button>
+    <button data-tab="chatgpt">Using ChatGPT</button>
+    <button data-tab="notion">Notion Automation</button>
+    <button data-tab="cheats">Cheat Sheets</button>
+    <button data-tab="contrib">Contribute</button>
+  </nav>
+
+  <section id="intro" class="active">
+    <h2>Welcome Allies</h2>
+    <ul>
+      <li>Meet the team in <code>README.md</code>.</li>
+      <li>Know the rules: Show up, Log your work, One mission at a time, We move as a team.</li>
+      <li>Use the nav above to explore resources.</li>
+    </ul>
+  </section>
+
+  <section id="chatgpt">
+    <h2>Using ChatGPT (Free & Pro)</h2>
+    <h3>Free Users (Jimmy & Chan)</h3>
+    <ul>
+      <li>Access via browser or app.</li>
+      <li>Select <strong>o4-mini</strong> by clicking the "Think" button.</li>
+      <li>Great for:
+        <ul>
+          <li>Basic coding help (Python, JS, HTML).</li>
+          <li>Job applications & writing drafts.</li>
+          <li>Study questions & idea generation.</li>
+        </ul></li>
+    </ul>
+    <h3>Pro User (Ethan)</h3>
+    <ul>
+      <li>Use <strong>o3</strong> for deep analysis, refactoring, web-sourced research.</li>
+      <li>Use <strong>o4-mini-high</strong> when you need ultra-fast responses.</li>
+      <li>Enable tools (browser, code, files) for advanced workflows.</li>
+    </ul>
+  </section>
+
+  <section id="notion">
+    <h2>Notion Automation</h2>
+    <p>Trigger workflows, track logs, and streamline tasks in Notion.</p>
+    <a class="download-btn" href="./Behind-the-Code/notion_automation_kit.zip" download>Download Notion Automation Kit</a>
+    <div>
+      <p>Open <code>notion_automation_cheat_sheet.pdf</code> and <code>notion_automation_training_doc.html</code> in the <code>Behind-the-Code</code> folder.</p>
+      <p>Use templates to set reminders, logs, and project boards automatically.</p>
+    </div>
+  </section>
+
+  <section id="cheats">
+    <h2>Cheat Sheets</h2>
+    <ul>
+      <li><a href="./Behind-the-Code/openai_model_cheat_sheet.html">OpenAI Model Cheat Sheet (HTML)</a></li>
+      <li><a href="./Behind-the-Code/openai_model_cheat_sheet.pdf">OpenAI Model Cheat Sheet (PDF)</a></li>
+      <li><a href="./Behind-the-Code/prompt_engineering_best_practices.html">Prompt Engineering Best Practices</a></li>
+      <li><a href="./Behind-the-Code/prompt_engineering_best_practices.pdf">Prompt Engineering PDF</a></li>
+    </ul>
+  </section>
+
+  <section id="contrib">
+    <h2>Contribute & GitHub</h2>
+    <ul>
+      <li>Repo: <a href="https://github.com/WhackDevOps/programming-pact-hq" target="_blank">programming-pact-hq</a></li>
+      <li>Use branches: <code>dev-ethan</code>, <code>dev-chandler</code>, <code>dev-jimmy</code>.</li>
+      <li>Push your changes:</li>
+      <pre><code>git checkout -b dev-yourname
+...make changes...
+git add .
+git commit -m "Your update"
+git push origin dev-yourname</code></pre>
+      <li>Open a Pull Request to merge into <code>main</code>.</li>
+    </ul>
+  </section>
+
+  <script>
+    // Tab navigation
+    document.querySelectorAll('nav button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
