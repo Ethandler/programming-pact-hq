@@ -18,6 +18,8 @@ MAX_NEW_TOKENS = 100
 MAX_Q = 55000
 STAGE_COOLDOWN = 0.5
 LAUNCH_STABILITY_DELAY = 1.0
+LANDING_ALTITUDE_THRESHOLD = 5
+MUN_TRANSFER_ALTITUDE = 120000
 
 shutdown_requested = False
 
@@ -76,30 +78,23 @@ class StageController:
         self.last_stage_time = 0
         self.stage_history = []
 
-    def get_separation_parts(self, stage: int) -> List:
-        parts = []
-        parts += [d for d in self.vessel.parts.decouplers if not d.decoupled and d.part.stage == stage]
-        parts += [s for s in self.vessel.parts.separators if not s.decoupled and s.part.stage == stage]
-        parts += [lc for lc in self.vessel.parts.launch_clamps if lc.part.stage == stage]
-        return parts
-
     def analyze_stage(self) -> bool:
         if time.time() - self.last_stage_time < STAGE_COOLDOWN:
             return False
 
         stage = self.vessel.control.current_stage
         mission_recorder.log_captain(f"Analyzing stage {stage}")
-        engines = [e for e in self.vessel.parts.engines if e.part.stage == stage]
-        active = [e for e in engines if e.active and not e.flameout and e.thrust > 100 and e.fuel_flow > 0.1]
-        sep = self.get_separation_parts(stage)
 
-        if not active and sep:
-            mission_recorder.log_captain(f"Stage {stage} ready: {len(sep)} separation parts")
-            return True
-        if engines and not active and sep:
-            mission_recorder.log_captain(f"Emergency stage {stage} (engine failure)")
-            return True
-        return False
+        all_parts = self.vessel.parts.all
+        current_stage_parts = [p for p in all_parts if p.stage == stage and not p.decoupled]
+
+        engines = [e for e in self.vessel.parts.engines if e.part.stage == stage]
+        has_engine = any(e.has_fuel and e.thrust > 0 for e in engines)
+        should_stage = not has_engine and any(current_stage_parts)
+
+        if should_stage:
+            mission_recorder.log_captain(f"Stage {stage} ready: {len(current_stage_parts)} parts remaining")
+        return should_stage
 
     def execute_stage(self):
         if self.analyze_stage():
@@ -108,8 +103,6 @@ class StageController:
             self.last_stage_time = time.time()
             mission_recorder.log_captain(f"Staging: {stage} -> {self.vessel.control.current_stage}")
             self.stage_history.append((time.time(), stage))
-            if stage == max(s.stage for s in self.vessel.parts.all):
-                time.sleep(LAUNCH_STABILITY_DELAY)
             return True
         return False
 
@@ -131,16 +124,17 @@ class LaunchController(MissionController):
     def execute_phase(self):
         mission_recorder.log_captain("Initiating smart launch sequence")
         self.vessel.control.throttle = 1.0
-        ignition = False
-        while not ignition and not shutdown_requested:
-            self.stage_controller.execute_stage()
-            if any(e.active and e.thrust > 1000 for e in self.vessel.parts.engines):
-                ignition = True
-                mission_recorder.log_captain("Main engine ignition confirmed")
-            time.sleep(0.1)
-
         self.vessel.auto_pilot.engage()
         self.vessel.auto_pilot.target_pitch_and_heading(90, 90)
+
+        ignition = False
+        while not ignition and not shutdown_requested:
+            if self.stage_controller.execute_stage():
+                mission_recorder.log_captain("Stage triggered pre-ignition")
+            if any(e.active and e.thrust > 50 for e in self.vessel.parts.engines):
+                ignition = True
+                mission_recorder.log_captain("Engine ignition detected")
+            time.sleep(0.1)
 
         while self.apoapsis() < TARGET_ORBIT_ALT * 0.95 and not shutdown_requested:
             q = self.dynamic_pressure()
@@ -153,7 +147,7 @@ class LaunchController(MissionController):
                 self.vessel.auto_pilot.target_pitch_and_heading(pitch, 90)
             time.sleep(0.1)
 
-        mission_recorder.log_captain(f"Max Q observed")
+        mission_recorder.log_captain("Max Q and target apoapsis reached")
         return OrbitCircularizationController(self.conn)
 
 class OrbitCircularizationController(MissionController):
@@ -178,6 +172,18 @@ class OrbitCircularizationController(MissionController):
 
         self.vessel.control.throttle = 0.0
         mission_recorder.log_captain(f"Orbit achieved: {self.apoapsis()/1000:.1f}km x {self.periapsis()/1000:.1f}km")
+        return MunTransferController(self.conn)
+
+class MunTransferController(MissionController):
+    def execute_phase(self):
+        mission_recorder.log_captain("Calculating transfer to Mun")
+        self.vessel.auto_pilot.set_reference_frame(self.body.non_rotating_reference_frame)
+        self.vessel.auto_pilot.sas = True
+        self.vessel.auto_pilot.sas_mode = self.sc.SASMode.prograde
+        self.vessel.control.throttle = 1.0
+        time.sleep(5)
+        self.vessel.control.throttle = 0.0
+        mission_recorder.log_captain("Trans-munar injection complete")
         return None
 
 # --- Manager & Signals ---
