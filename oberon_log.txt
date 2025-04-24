@@ -14,3 +14,24 @@
 [2025-04-24 13:25:34] Circularizing orbit
 [2025-04-24 13:25:47] KRPC Disconnected
 [2025-04-24 13:25:47] Mission complete. Standing down.
+[2025-04-24 13:28:50] UKF Advanced Flight Systems Online
+[2025-04-24 13:28:50] Connecting to KSP...
+[2025-04-24 13:28:57] Connection established
+[2025-04-24 13:28:57] Starting mission sequence
+[2025-04-24 13:28:57] Initiating smart launch sequence
+[2025-04-24 13:28:57] Analyzing stage 17
+[2025-04-24 13:28:57] Critical failure: 'Parts' object has no attribute 'separators'
+[2025-04-24 13:29:16] UKF Advanced Flight Systems Online
+[2025-04-24 13:29:16] Connecting to KSP...
+[2025-04-24 13:29:16] Connection established
+[2025-04-24 13:29:16] Starting mission sequence
+[2025-04-24 13:29:16] Initiating smart launch sequence
+[2025-04-24 13:29:16] Analyzing stage 17
+[2025-04-24 13:29:16] Critical failure: 'Parts' object has no attribute 'separators'
+[2025-04-24 13:33:04] UKF Advanced Flight Systems Online
+[2025-04-24 13:33:04] Connecting to KSP...
+[2025-04-24 13:33:04] Connection established
+[2025-04-24 13:33:04] Starting mission sequence
+[2025-04-24 13:33:04] Initiating smart launch sequence
+[2025-04-24 13:33:04] Analyzing stage 17
+[2025-04-24 13:33:04] Critical failure: 'Parts' object has no attribute 'separators'
