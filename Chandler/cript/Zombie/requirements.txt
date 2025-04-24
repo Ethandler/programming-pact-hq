@@ -1,0 +1,8 @@
+numpy
+mss
+opencv-python
+pyautogui
+torch>=1.10.0
+transformers>=4.0.0
+gymnasium
+stable-baselines3
