@@ -1431,3 +1431,257 @@
 [2025-04-24 13:44:26] Analyzing stage 7
 [2025-04-24 13:44:26] Max Q and target apoapsis reached
 [2025-04-24 13:44:26] Precision orbital insertion
+[2025-04-24 13:45:41] Critical failure: [WinError 10053] An established connection was aborted by the software in your host machine
+[2025-04-24 13:47:47] UKF Advanced Flight Systems Online
+[2025-04-24 13:47:47] Connecting to KSP...
+[2025-04-24 13:47:47] Connection established
+[2025-04-24 13:47:47] Starting mission sequence
+[2025-04-24 13:47:47] Initiating smart launch sequence
+[2025-04-24 13:47:47] Analyzing stage 4
+[2025-04-24 13:47:47] Analyzing stage 4
+[2025-04-24 13:47:47] Analyzing stage 4
+[2025-04-24 13:47:47] Analyzing stage 4
+[2025-04-24 13:47:48] Analyzing stage 4
+[2025-04-24 13:47:48] Analyzing stage 4
+[2025-04-24 13:47:48] Analyzing stage 4
+[2025-04-24 13:47:48] Analyzing stage 4
+[2025-04-24 13:47:48] Analyzing stage 4
+[2025-04-24 13:47:48] Analyzing stage 4
+[2025-04-24 13:47:48] Analyzing stage 4
+[2025-04-24 13:47:49] Analyzing stage 4
+[2025-04-24 13:47:49] Analyzing stage 4
+[2025-04-24 13:47:49] Analyzing stage 4
+[2025-04-24 13:47:49] Analyzing stage 4
+[2025-04-24 13:47:49] Analyzing stage 4
+[2025-04-24 13:47:49] Analyzing stage 4
+[2025-04-24 13:47:49] Analyzing stage 4
+[2025-04-24 13:47:49] Analyzing stage 4
+[2025-04-24 13:47:50] Analyzing stage 4
+[2025-04-24 13:47:50] Analyzing stage 4
+[2025-04-24 13:47:50] Analyzing stage 4
+[2025-04-24 13:47:50] Analyzing stage 4
+[2025-04-24 13:47:50] Analyzing stage 4
+[2025-04-24 13:47:50] Analyzing stage 4
+[2025-04-24 13:47:50] Analyzing stage 4
+[2025-04-24 13:47:51] Analyzing stage 4
+[2025-04-24 13:47:51] Analyzing stage 4
+[2025-04-24 13:47:51] Analyzing stage 4
+[2025-04-24 13:47:51] Analyzing stage 4
+[2025-04-24 13:47:51] Analyzing stage 4
+[2025-04-24 13:47:51] Analyzing stage 4
+[2025-04-24 13:47:51] Analyzing stage 4
+[2025-04-24 13:47:51] Analyzing stage 4
+[2025-04-24 13:47:52] Analyzing stage 4
+[2025-04-24 13:47:52] Analyzing stage 4
+[2025-04-24 13:47:52] Analyzing stage 4
+[2025-04-24 13:47:52] Analyzing stage 4
+[2025-04-24 13:47:52] Analyzing stage 4
+[2025-04-24 13:47:52] Analyzing stage 4
+[2025-04-24 13:47:52] Analyzing stage 4
+[2025-04-24 13:47:53] Analyzing stage 4
+[2025-04-24 13:47:53] Analyzing stage 4
+[2025-04-24 13:47:53] Analyzing stage 4
+[2025-04-24 13:47:53] Analyzing stage 4
+[2025-04-24 13:47:53] Analyzing stage 4
+[2025-04-24 13:47:53] Analyzing stage 4
+[2025-04-24 13:47:53] Analyzing stage 4
+[2025-04-24 13:47:53] Analyzing stage 4
+[2025-04-24 13:47:54] Analyzing stage 4
+[2025-04-24 13:47:54] Analyzing stage 4
+[2025-04-24 13:47:54] Analyzing stage 4
+[2025-04-24 13:47:54] Analyzing stage 4
+[2025-04-24 13:47:54] Analyzing stage 4
+[2025-04-24 13:47:54] Analyzing stage 4
+[2025-04-24 13:47:54] Analyzing stage 4
+[2025-04-24 13:47:55] Analyzing stage 4
+[2025-04-24 13:47:55] Analyzing stage 4
+[2025-04-24 13:47:55] Analyzing stage 4
+[2025-04-24 13:47:55] Analyzing stage 4
+[2025-04-24 13:47:55] Analyzing stage 4
+[2025-04-24 13:47:55] Analyzing stage 4
+[2025-04-24 13:47:55] Analyzing stage 4
+[2025-04-24 13:47:56] Analyzing stage 4
+[2025-04-24 13:47:56] Analyzing stage 4
+[2025-04-24 13:47:56] Analyzing stage 4
+[2025-04-24 13:47:56] Analyzing stage 4
+[2025-04-24 13:47:56] Analyzing stage 4
+[2025-04-24 13:47:56] Analyzing stage 4
+[2025-04-24 13:47:56] Analyzing stage 4
+[2025-04-24 13:47:56] Analyzing stage 4
+[2025-04-24 13:47:57] Analyzing stage 4
+[2025-04-24 13:47:57] Analyzing stage 4
+[2025-04-24 13:47:57] Analyzing stage 4
+[2025-04-24 13:47:57] Analyzing stage 4
+[2025-04-24 13:47:57] Analyzing stage 4
+[2025-04-24 13:47:57] Analyzing stage 4
+[2025-04-24 13:47:57] Analyzing stage 4
+[2025-04-24 13:47:58] Analyzing stage 4
+[2025-04-24 13:47:58] Analyzing stage 4
+[2025-04-24 13:47:58] Analyzing stage 4
+[2025-04-24 13:47:58] Analyzing stage 4
+[2025-04-24 13:47:58] Analyzing stage 4
+[2025-04-24 13:47:58] Analyzing stage 4
+[2025-04-24 13:47:58] Analyzing stage 4
+[2025-04-24 13:47:59] Analyzing stage 4
+[2025-04-24 13:47:59] Analyzing stage 4
+[2025-04-24 13:47:59] Analyzing stage 4
+[2025-04-24 13:47:59] Analyzing stage 4
+[2025-04-24 13:47:59] Analyzing stage 4
+[2025-04-24 13:47:59] Analyzing stage 4
+[2025-04-24 13:47:59] Analyzing stage 4
+[2025-04-24 13:48:00] Analyzing stage 4
+[2025-04-24 13:48:00] Analyzing stage 4
+[2025-04-24 13:48:00] Analyzing stage 4
+[2025-04-24 13:48:00] Analyzing stage 4
+[2025-04-24 13:48:00] Analyzing stage 4
+[2025-04-24 13:48:00] Analyzing stage 4
+[2025-04-24 13:48:01] Analyzing stage 4
+[2025-04-24 13:48:01] Analyzing stage 4
+[2025-04-24 13:48:01] Analyzing stage 4
+[2025-04-24 13:48:01] Analyzing stage 4
+[2025-04-24 13:48:01] Analyzing stage 4
+[2025-04-24 13:48:01] Analyzing stage 4
+[2025-04-24 13:48:01] Analyzing stage 4
+[2025-04-24 13:48:02] Analyzing stage 4
+[2025-04-24 13:48:02] Analyzing stage 4
+[2025-04-24 13:48:02] Analyzing stage 4
+[2025-04-24 13:48:02] Analyzing stage 4
+[2025-04-24 13:48:02] Analyzing stage 4
+[2025-04-24 13:48:02] Analyzing stage 4
+[2025-04-24 13:48:02] Analyzing stage 4
+[2025-04-24 13:48:03] Analyzing stage 4
+[2025-04-24 13:48:03] Analyzing stage 4
+[2025-04-24 13:48:03] Analyzing stage 4
+[2025-04-24 13:48:03] Analyzing stage 4
+[2025-04-24 13:48:03] Analyzing stage 4
+[2025-04-24 13:48:03] Analyzing stage 4
+[2025-04-24 13:48:03] Analyzing stage 4
+[2025-04-24 13:48:04] Analyzing stage 4
+[2025-04-24 13:48:04] Analyzing stage 4
+[2025-04-24 13:48:04] Analyzing stage 4
+[2025-04-24 13:48:04] Analyzing stage 4
+[2025-04-24 13:48:04] Analyzing stage 4
+[2025-04-24 13:48:04] Analyzing stage 4
+[2025-04-24 13:48:04] Analyzing stage 4
+[2025-04-24 13:48:04] Analyzing stage 4
+[2025-04-24 13:48:05] Analyzing stage 4
+[2025-04-24 13:48:05] Analyzing stage 4
+[2025-04-24 13:48:05] Analyzing stage 4
+[2025-04-24 13:48:05] Critical failure: [WinError 10053] An established connection was aborted by the software in your host machine
+[2025-04-24 13:49:36] UKF Advanced Flight Systems Online
+[2025-04-24 13:49:36] Connecting to KSP...
+[2025-04-24 13:49:37] Connection established
+[2025-04-24 13:49:37] Starting mission sequence
+[2025-04-24 13:49:37] Initiating smart launch sequence
+[2025-04-24 13:49:37] Analyzing stage 4
+[2025-04-24 13:49:42] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:49:42] Analyzing stage 4
+[2025-04-24 13:49:47] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:49:47] Analyzing stage 4
+[2025-04-24 13:49:52] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:49:52] Analyzing stage 4
+[2025-04-24 13:49:57] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:49:57] Analyzing stage 4
+[2025-04-24 13:50:02] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:50:03] Analyzing stage 4
+[2025-04-24 13:50:06] Emergency shutdown!
+[2025-04-24 13:50:08] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:50:08] Max Q and target apoapsis reached
+[2025-04-24 13:50:08] Mission termination sequence complete
+[2025-04-24 13:51:00] UKF Advanced Flight Systems Online
+[2025-04-24 13:51:00] Connecting to KSP...
+[2025-04-24 13:51:00] Connection established
+[2025-04-24 13:51:00] Beginning mission...
+[2025-04-24 13:51:00] Initiating smart launch sequence
+[2025-04-24 13:51:00] Analyzing stage 4
+[2025-04-24 13:51:05] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:51:05] Analyzing stage 4
+[2025-04-24 13:51:10] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:51:10] Analyzing stage 4
+[2025-04-24 13:51:16] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:51:16] Analyzing stage 4
+[2025-04-24 13:51:21] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:51:21] Analyzing stage 4
+[2025-04-24 13:51:26] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:51:26] Analyzing stage 4
+[2025-04-24 13:51:31] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:51:31] Analyzing stage 4
+[2025-04-24 13:51:36] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:51:36] Analyzing stage 4
+[2025-04-24 13:51:41] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:51:42] Analyzing stage 4
+[2025-04-24 13:51:47] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:51:47] Analyzing stage 4
+[2025-04-24 13:51:52] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:51:52] Analyzing stage 4
+[2025-04-24 13:51:57] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:51:57] Analyzing stage 4
+[2025-04-24 13:52:02] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:52:02] Analyzing stage 4
+[2025-04-24 13:52:07] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:52:07] Analyzing stage 4
+[2025-04-24 13:52:12] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:52:13] Analyzing stage 4
+[2025-04-24 13:52:18] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:52:18] Analyzing stage 4
+[2025-04-24 13:52:23] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:52:23] Analyzing stage 4
+[2025-04-24 13:52:27] Emergency shutdown!
+[2025-04-24 13:52:28] Stage 4 not ready after 5.0s analysis
+[2025-04-24 13:52:28] Ascent complete, orbit target apoapsis reached
+[2025-04-24 13:52:28] Mission termination sequence complete
+[2025-04-24 13:52:41] UKF Advanced Flight Systems Online
+[2025-04-24 13:52:41] Connecting to KSP...
+[2025-04-24 13:52:41] Connection established
+[2025-04-24 13:52:41] Beginning mission...
+[2025-04-24 13:52:42] Initiating smart launch sequence
+[2025-04-24 13:52:42] Stage 4 separated -> now stage 3
+[2025-04-24 13:52:42] Engine ignition confirmed
+[2025-04-24 13:52:43] Stage 3 separated -> now stage 2
+[2025-04-24 13:52:44] Stage 2 separated -> now stage 1
+[2025-04-24 13:52:44] Stage 1 separated -> now stage 0
+[2025-04-24 13:52:44] Stage 0 separated -> now stage 0
+[2025-04-24 13:52:45] Stage 0 separated -> now stage 0
+[2025-04-24 13:52:46] Stage 0 separated -> now stage 0
+[2025-04-24 13:52:46] Stage 0 separated -> now stage 0
+[2025-04-24 13:52:47] Stage 0 separated -> now stage 0
+[2025-04-24 13:52:47] Stage 0 separated -> now stage 0
+[2025-04-24 13:52:48] Stage 0 separated -> now stage 0
+[2025-04-24 13:52:48] Stage 0 separated -> now stage 0
+[2025-04-24 13:52:49] Stage 0 separated -> now stage 0
+[2025-04-24 13:52:49] Critical failure: [WinError 10053] An established connection was aborted by the software in your host machine
+[2025-04-24 13:54:39] UKF Advanced Flight Systems Online
+[2025-04-24 13:54:39] Connecting to KSP...
+[2025-04-24 13:54:39] Connection established
+[2025-04-24 13:54:39] Beginning mission...
+[2025-04-24 13:54:39] Initiating smart launch sequence
+[2025-04-24 13:54:40] Critical failure: 'charmap' codec can't encode character '\u2192' in position 40: character maps to <undefined>
+[2025-04-24 14:45:07] UKF Advanced Flight Systems Online
+[2025-04-24 14:45:07] Connecting to KSP...
+[2025-04-24 14:45:07] Connection established
+[2025-04-24 14:45:07] Beginning mission...
+[2025-04-24 14:45:07] Initiating smart launch sequence
+[2025-04-24 14:45:08] Stage 4 separated -> now stage 3
+[2025-04-24 14:45:08] Engine ignition confirmed
+[2025-04-24 14:45:57] Ascent complete, target apoapsis reached
+[2025-04-24 14:45:57] Beginning orbital circularization
+[2025-04-24 14:46:34] Orbit circularized: 310.0 km apoapsis
+[2025-04-24 14:46:34] Initiating Mun transfer...
+[2025-04-24 14:48:29] Critical failure: No such vessel 06d0f19f-9ddc-47cb-9cff-885f84d9b2fb
+Server stack trace:
+  at KRPC.SpaceCenter.FlightGlobalsExtensions.GetVesselById (System.Guid id) [0x0008a] in <d8566df5220a4070afa44bd2ecc53aa8>:0 
+  at KRPC.SpaceCenter.Services.AutoPilot.get_InternalVessel () [0x00000] in <d8566df5220a4070afa44bd2ecc53aa8>:0 
+  at KRPC.SpaceCenter.Services.AutoPilot.get_Error () [0x00084] in <d8566df5220a4070afa44bd2ecc53aa8>:0 
+  at KRPC.SpaceCenter.Services.AutoPilot.Wait () [0x00000] in <d8566df5220a4070afa44bd2ecc53aa8>:0 
+  at KRPC.Service.YieldException.CallUntyped () [0x00014] in <721f168820194101b819b3da6b33b716>:0 
+  at KRPC.Service.ProcedureCallContinuation+<Run>c__AnonStorey0.<>m__0 () [0x00000] in <721f168820194101b819b3da6b33b716>:0 
+  at KRPC.Service.Services.ExecuteCall (KRPC.Service.Scanner.ProcedureSignature procedure, System.Func`1[TResult] continuation) [0x00000] in <721f168820194101b819b3da6b33b716>:0 
+[2025-04-24 15:30:47] UKF Advanced Flight Systems Online
+[2025-04-24 15:30:47] Connecting to KSP...
+[2025-04-24 15:31:21] Connection established
+[2025-04-24 15:31:21] Beginning mission...
+[2025-04-24 15:31:22] Initiating smart launch sequence
+[2025-04-24 15:31:43] Received signal 2, shutting down...
+[2025-04-24 15:32:29] Received signal 2, shutting down...
+[2025-04-24 15:32:29] Received signal 2, shutting down...
+[2025-04-24 15:32:29] Received signal 2, shutting down...
