@@ -4,10 +4,22 @@ import argparse
 
 def scan_folder(root_path, read_bytes=1024):
     """
-    Walks through root_path and checks each file:
-      - Zero-byte files
-      - Files raising an exception when opening/reading
-    Returns a dict with lists: {'zero_size': [...], 'unreadable': [...]}
+    Recursively scans the directory at root_path to identify problematic files.
+
+    Functionality:
+    - Finds files that are zero bytes in size.
+    - Detects files that cannot be stat'ed or read (unreadable).
+    - Attempts to read up to `read_bytes` bytes from each file to confirm readability.
+
+    Args:
+        root_path (str): The root directory path to start scanning from.
+        read_bytes (int, optional): Number of bytes to read from each file to test readability. Defaults to 1024.
+
+    Returns:
+        dict: A dictionary with two keys:
+            'zero_size' (list of str): List of filepaths that have zero bytes.
+            'unreadable' (list of tuples): List of tuples (filepath, error_message) 
+                                           for files that could not be read or stat'ed.
     """
     zero_size = []
     unreadable = []
@@ -41,6 +53,21 @@ def scan_folder(root_path, read_bytes=1024):
     }
 
 def main():
+    """
+    Command-line interface for scanning a folder for zero-byte and unreadable files.
+
+    Parses command-line arguments to get the folder path and optional output report file path.
+    Validates the folder, performs the scan, prints a summary and detailed report,
+    and optionally writes the results to a specified text file.
+
+    No input parameters; arguments are provided via the command line.
+
+    Outputs:
+        - Prints summary and detailed listing to stdout.
+        - Optionally writes a report file if '--output' argument is supplied.
+    Exits:
+        - With code 1 if the specified folder is invalid.
+    """
     parser = argparse.ArgumentParser(
         description="Scan a folder for zero-byte or unreadable files."
     )
@@ -87,7 +114,7 @@ def main():
                 out.write(f"Zero-byte files ({len(report['zero_size'])}):\n")
                 for p in report['zero_size']:
                     out.write(p + "\n")
-                out.write("\nUnreadable files ({len(report['unreadable'])}):\n")
+                out.write(f"\nUnreadable files ({len(report['unreadable'])}):\n")
                 for p, err in report['unreadable']:
                     out.write(f"{p} --> {err}\n")
             print(f"Report saved to {args.output}")
