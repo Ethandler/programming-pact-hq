@@ -6,11 +6,16 @@
         "COOLDOWN",
         "decouplers",
         "endoftext",
+        "Errno",
+        "Kerbal",
         "krpc",
         "levelname",
+        "numpy",
+        "opencv",
         "pagesizes",
         "pdfgen",
         "periapsis",
+        "pyautogui",
         "signum",
         "yourname"
     ]
