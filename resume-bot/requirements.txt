@@ -1,0 +1,6 @@
+openai>=1.0.0
+notion-client
+PyGithub
+reportlab
+python-dotenv
+requests

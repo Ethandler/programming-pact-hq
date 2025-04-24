@@ -1,0 +1,212 @@
+{
+  "parent": {
+    "type": "page_id",
+    "page_id": "REPLACE_WITH_ETHAN_PAGE_ID"
+  },
+  "title": [
+    {
+      "type": "text",
+      "text": {
+        "content": "Ethan \u2013 ResumeBot Mission Guide"
+      }
+    }
+  ],
+  "children": [
+    {
+      "object": "block",
+      "type": "paragraph",
+      "paragraph": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Build ResumeBot \u2014 a desktop resume generation service that takes user input, sends it to GPT\u20114, formats it into PDF, uploads it, and logs it."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "heading_2",
+      "heading_2": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "1. User Input System"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Build CLI or local HTML form for user to input resume fields"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Capture: Name, Contact Info, Work History, Education, Skills, Summary"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "heading_2",
+      "heading_2": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "2. GPT Prompt Engineering"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Use OpenAI GPT\u20114 to generate polished 2-page resume"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Tune prompt for formatting, tone, ATS readability"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "heading_2",
+      "heading_2": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "3. PDF + Gist Integration"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Generate styled PDF using ReportLab"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Upload resume to GitHub Gist and return share link"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "heading_2",
+      "heading_2": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "4. Notion Logging + Email Draft"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Log each resume in Notion: client name, date, price, Gist URL"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Optionally send pre-filled email with PDF attached"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "paragraph",
+      "paragraph": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "\ud83d\ude80 Let\u2019s build something legendary. Stay in sync. Finish strong."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+{
+  "parent": {
+    "type": "page_id",
+    "page_id": "REPLACE_WITH_CHAN_PAGE_ID"
+  },
+  "title": [
+    {
+      "type": "text",
+      "text": {
+        "content": "Chan \u2013 InspiroGPT Mission Guide"
+      }
+    }
+  ],
+  "children": [
+    {
+      "object": "block",
+      "type": "paragraph",
+      "paragraph": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Build and launch a micro SaaS named InspiroGPT that delivers GPT-generated motivational quotes by API. Monetize it. Ship it in 48 hours."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "heading_2",
+      "heading_2": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "1. API Foundation"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Use Flask to build endpoints: /random, /theme/<tag>, /usage"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Integrate OpenAI to generate quotes based on theme (Stoic, Startup, etc.)"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "heading_2",
+      "heading_2": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "2. Account Tiers + Stripe"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Add signup/login system and tie accounts to API keys"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Use Stripe for Pro ($15/mo) and Ultra ($50/mo) plans"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "heading_2",
+      "heading_2": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "3. Usage Logging + Notion"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Count and limit monthly API calls per key"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Log new signups and usage stats to the Notion dashboard"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "heading_2",
+      "heading_2": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "4. Deployment & Docs"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Host on Render or Railway"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Publish usage guide + Postman collection"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Announce on RapidAPI or Product Hunt"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "paragraph",
+      "paragraph": {
+        "text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "\ud83d\ude80 Let\u2019s build something legendary. Stay in sync. Finish strong."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
