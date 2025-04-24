@@ -75,23 +75,32 @@ class StageController:
     def __init__(self, vessel):
         self.vessel = vessel
         self.last_stage_time = 0
-        self.decouplers = [p for p in vessel.parts.decouplers if not p.decoupled]
 
     def analyze_stage(self):
         if time.time() - self.last_stage_time < STAGE_COOLDOWN:
             return False
-        stage = self.vessel.control.current_stage
-        if stage == 0:
-            return False
-        active = [e for e in self.vessel.parts.engines if e.part.stage == stage - 1 and e.active and e.has_fuel and e.thrust > 0.1 * e.max_thrust]
-        decouplers = [d for d in self.decouplers if d.part.stage == stage - 1]
-        return not active and decouplers
+        current_stage = self.vessel.control.current_stage
+        activated_stage = current_stage + 1  # Stage last activated
+        
+        # Check engines in activated stage
+        active_engines = [e for e in self.vessel.parts.engines 
+                          if e.part.stage == activated_stage 
+                          and e.active 
+                          and not e.flameout]
+        
+        # Check for undecoupled decouplers in next stage
+        next_decouplers = [d for d in self.vessel.parts.decouplers 
+                           if not d.decoupled 
+                           and d.part.stage == current_stage]
+        
+        return not active_engines and next_decouplers
 
     def execute_stage(self):
         if self.analyze_stage():
+            current_stage_before = self.vessel.control.current_stage
             self.vessel.control.activate_next_stage()
             self.last_stage_time = time.time()
-            mission_recorder.log_captain(f"Stage {self.vessel.control.current_stage} executed")
+            mission_recorder.log_captain(f"Stage {current_stage_before} executed")
             return True
         return False
 
