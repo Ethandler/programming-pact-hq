@@ -1,0 +1,4 @@
+[2025-04-24 13:10:13] UKF Autonomous Mission AI Online
+[2025-04-24 13:10:13] Connected to KRPC
+[2025-04-24 13:10:13] Launch phase initiated
+[2025-04-24 13:10:48] KRPC Disconnected
