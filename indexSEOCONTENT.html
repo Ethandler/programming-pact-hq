@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>ContentBot: Automated Content Generation Service</title>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>ContentBot</h1>
+      <p class="tagline">Automated AI Content Generation</p>
+    </header>
+    
+    <div class="dashboard">
+      <div class="stats-container">
+        <div class="stat-box">
+          <h3>Orders</h3>
+          <p id="orderCount">0</p>
+        </div>
+        <div class="stat-box">
+          <h3>Revenue</h3>
+          <p id="revenue">$0</p>
+        </div>
+        <div class="stat-box">
+          <h3>API Costs</h3>
+          <p id="apiCosts">$0</p>
+        </div>
+        <div class="stat-box">
+          <h3>Profit</h3>
+          <p id="profit">$0</p>
+        </div>
+      </div>
+      
+      <div class="control-panel">
+        <h2>Service Controls</h2>
+        <div class="form-group">
+          <label for="apiKey">OpenAI API Key:</label>
+          <input type="password" id="apiKey" placeholder="sk-...">
+        </div>
+        <div class="form-group">
+          <label for="serviceStatus">Service Status:</label>
+          <select id="serviceStatus">
+            <option value="active">Active</option>
+            <option value="paused">Paused</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pricePerWord">Price Per Word (cents):</label>
+          <input type="number" id="pricePerWord" value="5" min="1" max="20">
+        </div>
+        <button id="saveSettings">Save Settings</button>
+      </div>
+    </div>
+    
+    <div class="order-queue">
+      <h2>Order Queue</h2>
+      <div class="table-container">
+        <table id="orderTable">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Topic</th>
+              <th>Word Count</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="orderTableBody">
+            <!-- Orders will be added here dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div class="simulation-panel">
+      <h2>Demo Order Simulator</h2>
+      <div class="form-group">
+        <label for="simulatedTopic">Topic:</label>
+        <input type="text" id="simulatedTopic" placeholder="e.g., Benefits of Meditation">
+      </div>
+      <div class="form-group">
+        <label for="simulatedWordCount">Word Count:</label>
+        <select id="simulatedWordCount">
+          <option value="500">500 words</option>
+          <option value="1000">1000 words</option>
+          <option value="1500">1500 words</option>
+        </select>
+      </div>
+      <button id="createSimulatedOrder">Create Test Order</button>
+    </div>
+    
+    <div class="log-panel">
+      <h2>System Logs</h2>
+      <div id="logContainer" class="log-container">
+        <!-- Logs will be added here dynamically -->
+      </div>
+    </div>
+  </div>
+  
+  <style>
+    /* Base styles */
+    html {
+      background-color: #f0f4f8;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    
+    .container {
+      max-width: 100%;
+      padding: 15px;
+    }
+    
+    header {
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    
+    .tagline {
+      margin: 5px 0 0;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    
+    /* Dashboard stats */
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .stat-box {
+      background-color: white;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    
+    .stat-box h3 {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .stat-box p {
+      margin: 10px 0 0;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    /* Control panel */
+    .control-panel, .simulation-panel, .order-queue, .log-panel {
+      background-color: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    
+    button {
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      width: 100%;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Table styles */
+    .table-container {
+      overflow-x: auto;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    
+    th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #555;
+    }
+    
+    tbody tr:hover {
+      background-color: #f6f9fc;
+    }
+    
+    /* Log panel */
+    .log-container {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 15px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    
+    .log-entry {
+      margin-bottom: 5px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .log-time {
+      color: #888;
+      margin-right: 8px;
+    }
+    
+    .log-info {
+      color: #0366d6;
+    }
+    
+    .log-success {
+      color: #28a745;
+    }
+    
+    .log-error {
+      color: #dc3545;
+    }
+    
+    /* Action buttons in table */
+    .action-button {
+      background: transparent;
+      color: #6e8efb;
+      border: 1px solid #6e8efb;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-right: 5px;
+      width: auto;
+    }
+    
+    .action-button:hover {
+      background: #f0f4ff;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    /* Status indicators */
+    .status-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .status-pending {
+      background-color: #fff8e6;
+      color: #f59f00;
+    }
+    
+    .status-processing {
+      background-color: #e3f2fd;
+      color: #2196f3;
+    }
+    
+    .status-completed {
+      background-color: #e6f7ed;
+      color: #28a745;
+    }
+    
+    .status-error {
+      background-color: #ffebee;
+      color: #dc3545;
+    }
+    
+    h2 {
+      font-size: 1.25rem;
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: #444;
+    }
+  </style>
+  
+  <script>
+    // Data models and state management
+    let appState = {
+      orders: [],
+      stats: {
+        orderCount: 0,
+        revenue: 0,
+        apiCosts: 0,
+        profit: 0
+      },
+      settings: {
+        apiKey: '',
+        serviceStatus: 'active',
+        pricePerWord: 5 // cents
+      }
+    };
+    
+    // Load saved state from localStorage
+    function loadAppState() {
+      // Only load if there's saved state
+      const savedState = localStorage.getItem('contentBotState');
+      if (savedState) {
+        try {
+          appState = JSON.parse(savedState);
+          updateUI();
+          addLog('System state loaded successfully', 'info');
+        } catch (err) {
+          addLog('Error loading saved state: ' + err.message, 'error');
+        }
+      } else {
+        addLog('No saved state found, starting fresh', 'info');
+      }
+    }
+    
+    // Save current state to localStorage
+    function saveAppState() {
+      try {
+        localStorage.setItem('contentBotState', JSON.stringify(appState));
+        addLog('System state saved successfully', 'info');
+      } catch (err) {
+        addLog('Error saving state: ' + err.message, 'error');
+      }
+    }
+    
+    // Generate a unique order ID
+    function generateOrderId() {
+      return 'ORD-' + Date.now().toString().slice(-6) + '-' + Math.floor(Math.random() * 1000);
+    }
+    
+    // Create a new order
+    function createOrder(topic, wordCount) {
+      // Calculate price based on word count and price per word
+      const price = (wordCount * appState.settings.pricePerWord / 100).toFixed(2);
+      
+      const newOrder = {
+        id: generateOrderId(),
+        topic: topic,
+        wordCount: wordCount,
+        price: price,
+        status: 'pending',
+        createdAt: new Date().toISOString(),
+        content: null,
+        apiCost: 0
+      };
+      
+      appState.orders.push(newOrder);
+      appState.stats.orderCount++;
+      appState.stats.revenue += parseFloat(price);
+      updateStats();
+      
+      addLog(`New order created: ${newOrder.id} - "${topic}" (${wordCount} words)`, 'info');
+      saveAppState();
+      updateOrderTable();
+      
+      // If service is active, process the order
+      if (appState.settings.serviceStatus === 'active') {
+        processOrder(newOrder.id);
+      }
+      
+      return newOrder;
+    }
+    
+    // Process an order with OpenAI
+    async function processOrder(orderId) {
+      const orderIndex = appState.orders.findIndex(order => order.id === orderId);
+      if (orderIndex === -1) {
+        addLog(`Order ${orderId} not found`, 'error');
+        return;
+      }
+      
+      const order = appState.orders[orderIndex];
+      
+      // Update status to processing
+      order.status = 'processing';
+      updateOrderTable();
+      addLog(`Processing order ${orderId}...`, 'info');
+      
+      // Check if API key is set
+      if (!appState.settings.apiKey) {
+        order.status = 'error';
+        addLog(`Cannot process order ${orderId}: OpenAI API key not set`, 'error');
+        updateOrderTable();
+        saveAppState();
+        return;
+      }
+      
+      try {
+        // This would normally be a real API call to OpenAI
+        // For the demo, we'll simulate the API call with a timeout
+        await simulateOpenAICall(order);
+        
+        // Update order with completed status and content
+        order.status = 'completed';
+        
+        // Calculate API cost (approximately $0.02 per 1000 tokens, roughly 750 words)
+        const estimatedTokens = order.wordCount * 1.33;
+        const apiCost = (estimatedTokens / 1000 * 0.02).toFixed(2);
+        order.apiCost = parseFloat(apiCost);
+        
+        // Update stats
+        appState.stats.apiCosts += order.apiCost;
+        appState.stats.profit = (appState.stats.revenue - appState.stats.apiCosts).toFixed(2);
+        
+        addLog(`Order ${orderId} completed. API cost: $${apiCost}`, 'success');
+        updateStats();
+        updateOrderTable();
+        saveAppState();
+      } catch (err) {
+        order.status = 'error';
+        addLog(`Error processing order ${orderId}: ${err.message}`, 'error');
+        updateOrderTable();
+        saveAppState();
+      }
+    }
+    
+    // Simulate OpenAI API call (for demo purposes)
+    function simulateOpenAICall(order) {
+      return new Promise((resolve, reject) => {
+        // Simulate API call timing (1-3 seconds based on word count)
+        const delay = Math.max(1000, Math.min(3000, order.wordCount * 2));
+        
+        setTimeout(() => {
+          // Generate lorem ipsum-style content based on word count
+          order.content = generateDummyContent(order.topic, order.wordCount);
+          resolve(order.content);
+        }, delay);
+      });
+    }
+    
+    // Generate dummy content for demonstration
+    function generateDummyContent(topic, wordCount) {
+      const sentences = [
+        `This comprehensive article explores ${topic} in depth.`,
+        `Many experts consider ${topic} to be an essential aspect of modern business.`,
+        `When examining ${topic}, we must consider several key factors.`,
+        `Research shows that ${topic} can significantly impact overall performance.`,
+        `The importance of ${topic} cannot be overstated in today's competitive landscape.`,
+        `Let's analyze how ${topic} affects different aspects of the industry.`,
+        `Companies implementing ${topic} strategies have seen remarkable results.`,
+        `Understanding ${topic} requires both theoretical knowledge and practical experience.`,
+        `The future of ${topic} looks promising according to recent studies.`,
+        `Several case studies highlight the effectiveness of ${topic} when properly applied.`
+      ];
+      
+      // Generate paragraphs until we reach the desired word count
+      let content = `# ${topic}\n\n`;
+      let currentWordCount = 0;
+      
+      while (currentWordCount < wordCount) {
+        // Add a paragraph title
+        content += `## ${sentences[Math.floor(Math.random() * sentences.length)].replace('This', 'Why').replace('.', '')}\n\n`;
+        
+        // Add 3-5 sentences per paragraph
+        const sentencesPerParagraph = Math.floor(Math.random() * 3) + 3;
+        let paragraph = '';
+        
+        for (let i = 0; i < sentencesPerParagraph; i++) {
+          const randomSentence = sentences[Math.floor(Math.random() * sentences.length)];
+          paragraph += randomSentence + ' ';
+          currentWordCount += randomSentence.split(' ').length;
+          
+          if (currentWordCount >= wordCount) break;
+        }
+        
+        content += paragraph + '\n\n';
+      }
+      
+      return content;
+    }
+    
+    // View generated content
+    function viewContent(orderId) {
+      const order = appState.orders.find(order => order.id === orderId);
+      if (!order || !order.content) {
+        addLog(`No content available for order ${orderId}`, 'error');
+        return;
+      }
+      
+      // In a real app, this would open a modal or new window
+      // For simplicity in this demo, we'll use alert
+      alert(`Content for order ${orderId} - "${order.topic}":\n\n${order.content}`);
+    }
+    
+    // Delete an order
+    function deleteOrder(orderId) {
+      const orderIndex = appState.orders.findIndex(order => order.id === orderId);
+      if (orderIndex === -1) {
+        addLog(`Order ${orderId} not found`, 'error');
+        return;
+      }
+      
+      const order = appState.orders[orderIndex];
+      
+      // Update stats
+      appState.stats.revenue -= parseFloat(order.price);
+      if (order.apiCost) {
+        appState.stats.apiCosts -= order.apiCost;
+      }
+      appState.stats.profit = (appState.stats.revenue - appState.stats.apiCosts).toFixed(2);
+      
+      // Remove order from array
+      appState.orders.splice(orderIndex, 1);
+      
+      addLog(`Order ${orderId} deleted`, 'info');
+      updateStats();
+      updateOrderTable();
+      saveAppState();
+    }
+    
+    // UI update functions
+    function updateUI() {
+      // Update form fields with current settings
+      document.getElementById('apiKey').value = appState.settings.apiKey;
+      document.getElementById('serviceStatus').value = appState.settings.serviceStatus;
+      document.getElementById('pricePerWord').value = appState.settings.pricePerWord;
+      
+      // Update stats and order table
+      updateStats();
+      updateOrderTable();
+    }
+    
+    function updateStats() {
+      document.getElementById('orderCount').textContent = appState.stats.orderCount;
+      document.getElementById('revenue').textContent = `$${appState.stats.revenue.toFixed(2)}`;
+      document.getElementById('apiCosts').textContent = `$${appState.stats.apiCosts.toFixed(2)}`;
+      document.getElementById('profit').textContent = `$${appState.stats.profit}`;
+    }
+    
+    function updateOrderTable() {
+      const tableBody = document.getElementById('orderTableBody');
+      tableBody.innerHTML = '';
+      
+      if (appState.orders.length === 0) {
+        const emptyRow = document.createElement('tr');
+        emptyRow.innerHTML = `<td colspan="6" style="text-align: center;">No orders yet</td>`;
+        tableBody.appendChild(emptyRow);
+        return;
+      }
+      
+      // Sort orders by creation date (newest first)
+      const sortedOrders = [...appState.orders].sort((a, b) => 
+        new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      
+      sortedOrders.forEach(order => {
+        const row = document.createElement('tr');
+        
+        // Create status badge based on order status
+        const statusBadge = `<span class="status-badge status-${order.status}">${order.status}</span>`;
+        
+        // Create action buttons
+        let actionButtons = '';
+        if (order.status === 'pending') {
+          actionButtons += `<button class="action-button" onclick="processOrder('${order.id}')">Process</button>`;
+        }
+        if (order.status === 'completed') {
+          actionButtons += `<button class="action-button" onclick="viewContent('${order.id}')">View</button>`;
+        }
+        actionButtons += `<button class="action-button" onclick="deleteOrder('${order.id}')">Delete</button>`;
+        
+        row.innerHTML = `
+          <td>${order.id}</td>
+          <td>${order.topic}</td>
+          <td>${order.wordCount}</td>
+          <td>$${order.price}</td>
+          <td>${statusBadge}</td>
+          <td>${actionButtons}</td>
+        `;
+        
+        tableBody.appendChild(row);
+      });
+    }
+    
+    // Log system events
+    function addLog(message, type = 'info') {
+      const logContainer = document.getElementById('logContainer');
+      const now = new Date();
+      const timeString = now.toLocaleTimeString();
+      
+      const logEntry = document.createElement('div');
+      logEntry.className = `log-entry log-${type}`;
+      logEntry.innerHTML = `<span class="log-time">[${timeString}]</span> ${message}`;
+      
+      logContainer.prepend(logEntry);
+      
+      // Limit to 50 log entries
+      const logEntries = logContainer.querySelectorAll('.log-entry');
+      if (logEntries.length > 50) {
+        logContainer.removeChild(logEntries[logEntries.length - 1]);
+      }
+    }
+    
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load saved state
+      loadAppState();
+      
+      // Save settings button
+      document.getElementById('saveSettings').addEventListener('click', () => {
+        appState.settings.apiKey = document.getElementById('apiKey').value;
+        appState.settings.serviceStatus = document.getElementById('serviceStatus').value;
+        appState.settings.pricePerWord = parseFloat(document.getElementById('pricePerWord').value);
+        
+        saveAppState();
+        addLog('Settings saved', 'success');
+      });
+      
+      // Create simulated order button
+      document.getElementById('createSimulatedOrder').addEventListener('click', () => {
+        const topic = document.getElementById('simulatedTopic').value || 'Content Marketing Strategies';
+        const wordCount = parseInt(document.getElementById('simulatedWordCount').value, 10);
+        
+        createOrder(topic, wordCount);
+      });
+      
+      // Initial log entry
+      addLog('Content automation service initialized', 'info');
+      
+      // Update UI
+      updateUI();
+    });
+    
+    // Expose functions to global scope (for button onclick handlers)
+    window.processOrder = processOrder;
+    window.viewContent = viewContent;
+    window.deleteOrder = deleteOrder;
+  </script>
+</body>
+</html>
