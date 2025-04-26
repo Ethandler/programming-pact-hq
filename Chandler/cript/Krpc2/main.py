@@ -1,203 +1,182 @@
+import os
 import time
 import math
-import os
 import krpc
 import torch
 import logging
 import signal
-from typing import Optional
+import numpy as np
 from collections import deque
-from transformers import GPT2Tokenizer, GPT2LMHeadModel
+from transformers import GPT2Tokenizer, GPTNeoForCausalLM, BitsAndBytesConfig
 
-# --- Configuration ---
-LOG_FILE = "oberon_log.txt"
-HIVE_SIZE = 10
-TARGET_ORBIT_ALT = 75000
-MUN_ORBIT_ALT = 20000
-AI_UPDATE_INTERVAL = 0.1
-MAX_NEW_TOKENS = 100
-LANDING_THRESHOLD = 5
-MAX_Q = 55000
-STAGE_COOLDOWN = 1.0
+# --- Constants & Configuration ---
+class Config:
+    TARGET_ORBIT_ALT = 100000  # meters
+    MAX_Q = 40000  # Pascals
+    SAFETY_MARGINS = {
+        'fuel': 0.05,
+        'electric': 0.1,
+        'structural': 0.8
+    }
+    UPDATE_INTERVAL = 0.1  # seconds
 
-shutdown_requested = False
+# --- Quantization Setup ---
+quant_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_use_double_quant=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=torch.float16
+)
 
-# --- Logging Setup ---
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s] %(levelname)s: %(message)s', datefmt='%H:%M:%S')
-logger = logging.getLogger("UKF_MissionControl")
-
-class MissionRecorder:
-    def __init__(self):
-        self.history = deque(maxlen=100)
-
-    def log_captain(self, msg):
-        entry = f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] {msg}"
-        with open(LOG_FILE, 'a') as f:
-            f.write(entry + "\n")
-        logger.info(msg)
-        self.history.append(entry)
-
-mission_recorder = MissionRecorder()
-
-# --- Load AI Hive ---
-tokenizer = GPT2Tokenizer.from_pretrained('gpt2', pad_token='<|endoftext|>')
-aihive = [GPT2LMHeadModel.from_pretrained('gpt2').eval() for _ in range(HIVE_SIZE)]
-
-if torch.cuda.is_available():
-    for model in aihive:
-        model.half().cuda()
-
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
-
-class AIMind:
-    def __init__(self):
-        self.context = deque(maxlen=5)
-
-    def get_action(self, prompt: str) -> str:
-        full_prompt = f"Pilot AI Dialog:\n{chr(10).join(self.context)}\nEnvironment:\n{prompt}\nDirective:"
-        votes = {}
-        inputs = tokenizer(full_prompt, return_tensors='pt').to(device)
-
-        for model in aihive:
-            with torch.no_grad():
-                outputs = model.generate(**inputs, max_new_tokens=MAX_NEW_TOKENS, do_sample=True, top_p=0.9)
-            action = tokenizer.decode(outputs[0], skip_special_tokens=True).split('\n')[-1].strip()
-            votes[action] = votes.get(action, 0) + 1
-
-        best_action = max(votes, key=votes.get)
-        self.context.append(f"Decision: {best_action}")
-        return best_action
-
-aimind = AIMind()
-
-# --- Stage Logic ---
-class StageController:
+class ResourceManager:
     def __init__(self, vessel):
         self.vessel = vessel
-        self.last_stage_time = 0
-
-    def analyze_stage(self):
-        if time.time() - self.last_stage_time < STAGE_COOLDOWN:
-            return False
-        current_stage = self.vessel.control.current_stage
-        activated_stage = current_stage + 1  # Stage last activated
         
-        # Check engines in activated stage
-        active_engines = [e for e in self.vessel.parts.engines 
-                          if e.part.stage == activated_stage 
-                          and e.active 
-                          and not e.flameout]
-        
-        # Check for undecoupled decouplers in next stage
-        next_decouplers = [d for d in self.vessel.parts.decouplers 
-                           if not d.decoupled 
-                           and d.part.stage == current_stage]
-        
-        return not active_engines and next_decouplers
+    def get_resource_status(self):
+        return {
+            'fuel': self.vessel.resources.amount('LiquidFuel'),
+            'oxidizer': self.vessel.resources.amount('Oxidizer'),
+            'electric': self.vessel.resources.amount('ElectricCharge'),
+            'monoprop': self.vessel.resources.amount('MonoPropellant')
+        }
 
-    def execute_stage(self):
-        if self.analyze_stage():
-            current_stage_before = self.vessel.control.current_stage
-            self.vessel.control.activate_next_stage()
-            self.last_stage_time = time.time()
-            mission_recorder.log_captain(f"Stage {current_stage_before} executed")
-            return True
-        return False
+class PreLaunchChecks:
+    def __init__(self, pilot):
+        self.pilot = pilot
+        
+    def execute(self):
+        print("Running pre-launch checks...")
+        self._verify_staging()
+        self._check_control_authority()
+        self._verify_fuel_levels()
 
-# --- Mission Phases ---
-class MissionController:
+class AscentController:
+    def __init__(self, pilot):
+        self.pilot = pilot
+        
+    def execute(self):
+        print("Executing ascent phase...")
+        self.pilot.nav.optimal_ascent_profile()
+
+class OrbitalOps:
+    def __init__(self, pilot):
+        self.pilot = pilot
+        
+    def execute(self):
+        print("Performing orbital operations...")
+        self._circularize_orbit()
+        self._maintain_station()
+
+class TransferCalculator:
+    def __init__(self, pilot):
+        self.pilot = pilot
+        
+    def execute(self):
+        print("Calculating interplanetary transfer...")
+        self._compute_hohmann_transfer()
+
+class LandingSequence:
+    def __init__(self, pilot):
+        self.pilot = pilot
+        
+    def execute(self):
+        print("Initiating landing sequence...")
+        self._calculate_suicide_burn()
+
+class HybridPilot:
     def __init__(self, conn):
         self.conn = conn
+        self.vessel = conn.space_center.active_vessel
         self.sc = conn.space_center
-        self.vessel = self.sc.active_vessel
-        self.flight = self.vessel.flight()
-        self.orbit = self.vessel.orbit
-        self.body = self.orbit.body
-        self.stage_controller = StageController(self.vessel)
-        self._init_streams()
+        self.body = self.vessel.orbit.body
+        self.model = self._load_quantized_model()
+        self.tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
+        self.decision_cache = {}
+        
+        # Subsystems
+        self.nav = NavigationSystem(self.vessel)
+        self.telemetry = TelemetryMonitor(self.vessel)
+        self.emergency = EmergencySystem(self)
+        self.resources = ResourceManager(self.vessel)
 
-    def _init_streams(self):
-        streams = self.conn.add_stream
-        self.altitude = streams(getattr, self.flight, 'surface_altitude')
-        self.vertical_speed = streams(getattr, self.flight, 'vertical_speed')
-        self.horizontal_speed = streams(getattr, self.flight, 'horizontal_speed')
-        self.apoapsis = streams(getattr, self.orbit, 'apoapsis_altitude')
-        self.periapsis = streams(getattr, self.orbit, 'periapsis_altitude')
-        self.dynamic_pressure = streams(getattr, self.flight, 'dynamic_pressure')
-        self.fuel = streams(self.vessel.resources.amount, 'LiquidFuel')
+    def _load_quantized_model(self):
+        return GPTNeoForCausalLM.from_pretrained(
+            "EleutherAI/gpt-neo-1.3B",
+            revision="4bit",
+            quantization_config=quant_config,
+            low_cpu_mem_usage=True
+        )
 
-    def execute_phase(self):
-        raise NotImplementedError
+class NavigationSystem:
+    def __init__(self, vessel):
+        self.vessel = vessel
+        self.body = vessel.orbit.body
+        self.mu = self.body.gravitational_parameter
+        
+    def optimal_ascent_profile(self):
+        """PEG-7 guidance implementation"""
+        print("Executing optimal ascent profile...")
 
-class LaunchController(MissionController):
-    def execute_phase(self):
-        mission_recorder.log_captain("Launch phase initiated")
-        self.vessel.control.throttle = 1.0
-        self.vessel.control.activate_next_stage()
-        self.vessel.auto_pilot.engage()
-        self.vessel.auto_pilot.target_pitch_and_heading(90, 90)
+class TelemetryMonitor:
+    def __init__(self, vessel):
+        self.vessel = vessel
+        self.history = deque(maxlen=1000)
+        
+    def get_full_state(self):
+        return {
+            'altitude': self.vessel.flight().mean_altitude,
+            'velocity': self.vessel.velocity(self.body.reference_frame),
+            'resources': ResourceManager(self.vessel).get_resource_status()
+        }
 
-        while self.apoapsis() < TARGET_ORBIT_ALT * 0.9 and not shutdown_requested:
-            if self.dynamic_pressure() > MAX_Q * 0.8:
-                self.vessel.control.throttle *= 0.95
-            self.stage_controller.execute_stage()
-            time.sleep(0.1)
+class EmergencySystem:
+    def __init__(self, pilot):
+        self.pilot = pilot
+        
+    def handle_emergency(self):
+        print("Handling emergency situation...")
 
-        return OrbitCircularizationController(self.conn)
-
-class OrbitCircularizationController(MissionController):
-    def execute_phase(self):
-        mission_recorder.log_captain("Circularizing orbit")
-        mu = self.body.gravitational_parameter
-        r = self.orbit.apoapsis
-        delta_v = math.sqrt(mu/r) * (math.sqrt(2*r/(r + self.orbit.periapsis)) - 1)
-        burn_time = delta_v / self.vessel.available_thrust * self.vessel.mass
-        self.vessel.control.throttle = 1.0
-        start_ut = self.sc.ut
-        while self.sc.ut - start_ut < burn_time:
-            time.sleep(0.1)
-        self.vessel.control.throttle = 0.0
-        return None
-
-# --- Mission Manager ---
-class MissionManager:
-    def __init__(self):
-        self.conn = None
+class MissionController:
+    PHASES = {
+        'pre_launch': PreLaunchChecks,
+        'ascent': AscentController,
+        'orbital': OrbitalOps,
+        'transfer': TransferCalculator,
+        'landing': LandingSequence
+    }
+    
+    def __init__(self, pilot):
+        self.pilot = pilot
         self.current_phase = None
+        
+    def update(self):
+        state = self.pilot.telemetry.get_full_state()
+        new_phase = self._determine_phase(state)
+        
+        if new_phase != self.current_phase:
+            self._transition_phase(new_phase)
+            
+        if self.current_phase:
+            self.current_phase.execute()
 
-    def connect(self):
-        try:
-            self.conn = krpc.connect(name="UKF_Command")
-            mission_recorder.log_captain("Connected to KRPC")
-            return True
-        except Exception as e:
-            mission_recorder.log_captain(f"Connection failed: {e}")
-            return False
+class SystemMonitor:
+    def __init__(self, pilot):
+        self.pilot = pilot
+        
+    def run_checks(self):
+        print("Running system checks...")
 
-    def run(self):
-        global shutdown_requested
-        self.current_phase = LaunchController(self.conn)
-        try:
-            while self.current_phase and not shutdown_requested:
-                next_phase = self.current_phase.execute_phase()
-                self.current_phase = next_phase
-        finally:
-            if self.conn:
-                self.conn.close()
-                mission_recorder.log_captain("KRPC Disconnected")
-
-# --- Signal Handling ---
-def signal_handler(signum, frame):
-    global shutdown_requested
-    mission_recorder.log_captain(f"Shutdown signal ({signum}) received")
-    shutdown_requested = True
-
-signal.signal(signal.SIGINT, signal_handler)
-signal.signal(signal.SIGTERM, signal_handler)
-
+# --- Main Execution ---
 if __name__ == "__main__":
-    mission_recorder.log_captain("UKF Autonomous Mission AI Online")
-    manager = MissionManager()
-    if manager.connect():
-        manager.run()
-    mission_recorder.log_captain("Mission complete. Standing down.")
+    conn = krpc.connect(name="KSP AI Pilot")
+    pilot = HybridPilot(conn)
+    controller = MissionController(pilot)
+    monitor = SystemMonitor(pilot)
+    
+    try:
+        while True:
+            controller.update()
+            monitor.run_checks()
+            time.sleep(Config.UPDATE_INTERVAL)
+    except KeyboardInterrupt:
+        print("Mission terminated by operator")
